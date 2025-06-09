@@ -1,0 +1,23 @@
+from langchain.llms import Cohere
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
+#import warnings
+#warnings.filterwarnings("ignore")
+api_key = "Enter Your Key Here"#add your cohere key
+with open("program8text.txt", "r") as f:
+ text = f.read()
+#what below is not a multi line comment
+prompt = PromptTemplate(
+ input_variables=["document"],
+ template="""
+Summarize the document below in bullet points:
+---
+{document}
+---
+Summary:
+ -
+"""
+)
+llm = Cohere(cohere_api_key=api_key)
+chain = LLMChain(llm=llm, prompt=prompt)
+print(chain.run(document=text))
