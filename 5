@@ -1,0 +1,14 @@
+import gensim.downloader as api
+import random
+model = api.load("glove-wiki-gigaword-100")
+def generate_paragraph(seed):
+ sims =[w for w, _ in model.most_similar(seed, topn=5)]
+ templates = [
+ f"The {seed} was surrounded by {sims[0]} and {sims[1]}.",
+ f"People often associate {seed} with {sims[2]} and {sims[3]}.",
+ f"In the land of {seed}, {sims[4]} was common.",
+ f"A story about {seed} needs {sims[1]} and {sims[3]}."
+ ]
+ return " ".join(random.choices(templates, k=4))
+word = input("Enter a seed word: ").lower().strip()
+print("\nGenerated Paragraph:\n",generate_paragraph(word))
