@@ -1,0 +1,8 @@
+import gensim.downloader as api
+model = api.load("glove-wiki-gigaword-100")
+queen_vector = model.get_vector("king")-
+model.get_vector('man')+model.get_vector('woman')
+similar_words = model.similar_by_vector(queen_vector, topn=10)
+simi=model.most_similar(positive=["actor", "woman"], negative=["man"],topn=10)
+print("words=king+man-woman:",similar_words)
+print("\nwords=actor+man-woman:",simi)
