@@ -1,0 +1,18 @@
+import gensim.downloader as api
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.manifold import TSNE
+model = api.load("glove-wiki-gigaword-50")
+print("Similar to 'computer':", model.most_similar("computer",topn=5))
+words = ["computer", "algorithm", "software", "hardware", "data", "network", "ai",
+"robotics", "internet", "cybersecurity"]
+vectors = np.array([model[word] for word in words])
+tsne = TSNE(n_components=3, perplexity=5)
+reduced = tsne.fit_transform(vectors)
+fig = plt.figure(figsize=(10, 6))
+ax = fig.add_subplot(111, projection='3d')
+for i, word in enumerate(words):
+ ax.scatter(*reduced[i])# * is very important
+ ax.text(*reduced[i], word, fontsize=10)
+ax.set_title("3D t-SNE Visualization of Word Embeddings")
+plt.show()
